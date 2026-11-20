@@ -4,6 +4,8 @@ A regression project on the **California Housing** dataset (1990 U.S. census, 20
 district's median house value from income, housing and location features. Includes exploratory data analysis, a
 cross-validated comparison of four regression models, and an interactive **Streamlit** demo.
 
+**🔗 Live demo:** https://california-housing-price-prediction-rywery2h5dmajnv5xumnal.streamlit.app/
+
 ## 📊 Dataset
 
 Loaded with `sklearn.datasets.fetch_california_housing`, and saved as `california_housing.csv` so the app doesn't
@@ -79,7 +81,9 @@ pip install -r requirements.txt
 
 ## ▶️ Run
 
-Streamlit demo (opens http://localhost:8501):
+Live demo: https://california-housing-price-prediction-rywery2h5dmajnv5xumnal.streamlit.app/
+
+Run the Streamlit demo locally (opens http://localhost:8501):
 
 ```bash
 streamlit run app.py
