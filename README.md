@@ -1,104 +1,102 @@
-🏠 California Housing Price Prediction
+# 🌴 California Housing Price Prediction
 
-A complete Machine Learning regression project that predicts housing prices in California using real-world census data.
-This project demonstrates the full end-to-end data science pipeline from data preprocessing to model evaluation.
+A regression project on the **California Housing** dataset (1990 U.S. census, 20,640 districts). It predicts a
+district's median house value from income, housing and location features. Includes exploratory data analysis, a
+cross-validated comparison of four regression models, and an interactive **Streamlit** demo.
 
-📌 Project Overview
+**🔗 Live demo:** https://california-housing-price-prediction-rywery2h5dmajnv5xumnal.streamlit.app/
 
-The goal of this project is to build a model that can accurately predict the median house value in different districts of California based on various features such as:
+## 📊 Dataset
 
-Income levels
-Population
-Housing age
-Number of rooms & bedrooms
-Geographic location (latitude & longitude)
+Loaded with `sklearn.datasets.fetch_california_housing`, and saved as `california_housing.csv` so the app doesn't
+need to download anything.
 
-This project is inspired by real-world real estate price prediction systems used in the industry.
+| Feature | Meaning |
+|---|---|
+| `MedInc` | median household income (in $10,000s) |
+| `HouseAge` | median house age (capped at 52) |
+| `AveRooms`, `AveBedrms` | average rooms / bedrooms per household |
+| `Population`, `AveOccup` | district population, average household size |
+| `Latitude`, `Longitude` | district location |
+| **`MedHouseVal`** (target) | median house value in $100,000s, **capped at 5.0 ($500,000)** |
 
-🧠 Key Concepts Covered
-Data cleaning & preprocessing
-Handling missing values
-Exploratory Data Analysis (EDA)
-Feature engineering
-Train/test splitting
-Regression modeling
-Model evaluation
-Hyperparameter tuning (if included)
-📊 Dataset
+## 🚀 Features
 
-The dataset is based on the 1990 California census and includes:
+- **EDA notebook:** distributions, the income-vs-value relationship, correlations, outliers and a location map.
+- **`california_housing.py`:**
+  - data loading;
+  - a 5-fold cross-validated comparison of the models listed for this project;
+  - training and saving the best model.
+- **Streamlit app:**
+  - predict a district's median value from its features;
+  - quick locations for six major cities;
+  - input validation and a range warning;
+  - the median value of real districts nearby;
+  - a "what if income changed" chart;
+  - a statewide price map, distribution and correlations;
+  - model comparison and feature importance.
 
-longitude
-latitude
-housing_median_age
-total_rooms
-total_bedrooms
-population
-households
-median_income
-median_house_value (target)
-⚙️ Machine Learning Workflow
-Load dataset
-Handle missing values
-Perform exploratory data analysis
-Feature scaling / transformation
-Train machine learning models
-Evaluate performance
-Improve model accuracy
-🤖 Models Used
+## 📈 Results
 
-Common models used in this type of project:
+5-fold cross-validation, `KFold(shuffle=True, random_state=42)`:
 
-Linear Regression
-Decision Tree Regressor
-Random Forest Regressor
-Gradient Boosting (optional improvement)
-🛠️ Technologies Used
-Python 🐍
-Pandas
-NumPy
-Scikit-learn
-Matplotlib
-Seaborn
-Jupyter Notebook
-📂 Project Structure
+| Model | R² | RMSE | MAE |
+|---|---|---|---|
+| **Gradient Boosting** | **0.844 ± 0.006** | **$45,500** | **$29,900** |
+| Random Forest | 0.812 ± 0.008 | $50,100 | $32,500 |
+| Decision Tree | 0.709 ± 0.011 | $62,200 | $41,100 |
+| Linear Regression | 0.601 ± 0.017 | $72,800 | $53,200 |
+
+The app uses the best model, Gradient Boosting, saved in `models/model.joblib`. If that file can't be loaded (for
+example, after a scikit-learn upgrade), the app retrains it automatically in about 25 seconds.
+
+## 🛠️ Tech Stack
+
+Python · pandas · NumPy · scikit-learn · Matplotlib · Seaborn · Altair · Streamlit · Jupyter
+
+## 📂 Project Structure
+
+```
 California-Housing-Price-Prediction/
-│
-├── clofornia houses.ipynb   # Main notebook
-├── data/                    # Dataset files (if included)
-├── images/                  # Visualizations
-└── README.md
-🚀 How to Run
-1. Clone repository
+├── clofornia houses.ipynb      # EDA notebook
+├── california_housing.csv      # Dataset (from fetch_california_housing)
+├── california_housing.py       # Data loading, model comparison, training
+├── models/
+│   ├── metrics.json            # Cross-validation results
+│   └── model.joblib            # Trained Gradient Boosting model
+├── app.py                      # Streamlit demo
+├── requirements.txt
+└── .streamlit/config.toml
+```
+
+## 📦 Installation
+
+```bash
 git clone https://github.com/amirafarhan/California-Housing-Price-Prediction.git
-2. Install dependencies
-pip install pandas numpy matplotlib seaborn scikit-learn
-3. Run Jupyter Notebook
-jupyter notebook
-4. Open file
-clofornia houses.ipynb
-📈 Results
+cd California-Housing-Price-Prediction
+python -m venv venv
+# Windows: venv\Scripts\activate    Linux/Mac: source venv/bin/activate
+pip install -r requirements.txt
+```
 
-The model is able to:
+## ▶️ Run
 
-Learn patterns between location, income, and housing prices
-Predict median house values with reasonable accuracy
-Show feature importance (if Random Forest is used)
-🔮 Future Improvements
-Deploy model using Flask / Streamlit
-Add interactive map visualization (Geo plots)
-Use advanced models (XGBoost / LightGBM)
-Feature scaling optimization
-Hyperparameter tuning with GridSearchCV
-👨‍💻 Author
+Live demo: https://california-housing-price-prediction-rywery2h5dmajnv5xumnal.streamlit.app/
 
-Amira Farhan
-Machine Learning & Computer Vision Engineer
+Run the Streamlit demo locally (opens http://localhost:8501):
 
-⭐ Support
+```bash
+streamlit run app.py
+```
 
-If you like this project:
+Re-run the model comparison and retrain the saved model (about 2 minutes):
 
-⭐ Star the repository
-🍴 Fork it
-🚀 Share it
+```bash
+python california_housing.py
+```
+
+Notebook: run `pip install jupyter matplotlib seaborn`, then `jupyter notebook`.
+
+## 👩‍💻 Author
+
+Amira Farhan — Machine Learning & Computer Vision Engineer
